@@ -1,8 +1,3 @@
-async function getBookingById(id) {
-  const query = `SELECT * FROM bookings WHERE id = $1`;
-  const result = await pool.query(query, [id]);
-  return result.rows[0];
-}
 // bookingsService.js
 // Business logic for bookings
 
@@ -14,10 +9,14 @@ async function createBooking({ client_name, client_phone, service_name, time, pr
   const result = await pool.query(query, values);
   return result.rows[0];
 }
-
+async function getBookingById(id) {
+  const query = `SELECT * FROM bookings WHERE id = $1`;
+  const result = await pool.query(query, [id]);
+  return result.rows[0];
+}
 async function getBookingsByProvider(provider_id) {
   const query = `
-  SELECT client_name, service_name, status, time
+  SELECT id, client_name, service_name, status, time, provider_id
     FROM bookings 
     WHERE provider_id = $1
   `;
@@ -26,7 +25,7 @@ async function getBookingsByProvider(provider_id) {
 }
 
 async function updateBookingStatus(id, status) {
-  const query = `UPDATE bookings SET status = 'confirmed' WHERE id = $2 RETURNING *`;
+  const query = `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`;
   const result = await pool.query(query, [status, id]);
   return result.rows[0];
 }

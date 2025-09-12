@@ -1,9 +1,3 @@
-module.exports = {
-  createProvider,
-  getProviderByEmail,
-  getProviderById,
-  updateProvider,
-};
 // providersService.js
 // Business logic for providers
 
@@ -29,6 +23,7 @@ async function getProviderByEmail(email) {
   return result.rows[0];
 }
 
+// Get provider by ID
 async function getProviderById(id) {
   const query = `SELECT * FROM providers WHERE id = $1`;
   const result = await pool.query(query, [id]);
@@ -41,3 +36,10 @@ async function updateProvider(id, { name, phone, specialty }) {
   const result = await pool.query(query, values);
   return result.rows[0];
 }
+
+module.exports = {
+  createProvider,
+  getProviderByEmail,
+  getProviderById,
+  updateProvider
+};

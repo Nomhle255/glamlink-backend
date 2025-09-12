@@ -16,6 +16,8 @@ async function createProvider(req, res) {
 async function getProviderById(req, res) {
   try {
     const provider = await providersService.getProviderById(req.params.id);
+    console.log('Requested provider ID:', req.params.id);
+    console.log('Provider found:', provider);
     if (provider) {
       res.json(provider);
     } else {
