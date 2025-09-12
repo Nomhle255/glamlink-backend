@@ -7,7 +7,6 @@ const cors = require('./src/config/corsConfig');
 const clientsRoutes = require('./src/routes/clientsRoutes');
 const authRoutes = require('./src/routes/authRoutes');
 const bookingsRoutes = require('./src/routes/bookingsRoutes');
-const whatsappRoutes = require('./src/routes/whatsappRoutes');
 const providersRoutes = require('./src/routes/providersRoutes');
 const servicesRoutes = require('./src/routes/servicesRoutes');
 
@@ -22,7 +21,6 @@ app.use('/auth', authRoutes);
 app.use('/bookings', bookingsRoutes);
 app.use('/providers', authRoutes);
 app.use('/services', servicesRoutes);
-app.use('/whatsapp', whatsappRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to Glamlink Backend');

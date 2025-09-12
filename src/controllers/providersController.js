@@ -32,7 +32,7 @@ async function updateProvider(req, res) {
   try {
     const updated = await providersService.updateProvider(req.params.id, req.body);
     if (updated) {
-      res.json(updated);
+      res.json({ success: true, provider: updated });
     } else {
       res.status(404).json({ error: 'Provider not found' });
     }

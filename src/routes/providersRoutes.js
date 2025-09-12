@@ -1,4 +1,3 @@
-// providersRoutes.js
 // Define provider routes
 
 const express = require('express');
@@ -14,6 +13,9 @@ router.get('/:id', providersController.getProviderById);
 
 // Update provider info
 router.put('/:id', providersController.updateProvider);
+
+// Partially update provider info
+router.patch('/:id', providersController.updateProvider);
 
 // Login route
 router.post('/login', authController.login);

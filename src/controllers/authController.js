@@ -31,7 +31,9 @@ exports.login = async (req, res) => {
     res.json({
       id: provider.id,
       name: provider.name,
-      email: provider.email
+      email: provider.email,
+      phone: provider.phone,
+      role: provider.role
     });
   } catch (err) {
     console.error('Error in login:', err);
