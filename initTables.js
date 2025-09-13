@@ -32,8 +32,15 @@ async function initTables() {
       time TIMESTAMP NOT NULL,
       provider_id INTEGER REFERENCES providers(id) ON DELETE CASCADE
     )`);
+    // Create timeslots table
+    await pool.query(`CREATE TABLE IF NOT EXISTS timeslots (
+      id SERIAL PRIMARY KEY,
+      provider_id INTEGER REFERENCES providers(id) ON DELETE CASCADE,
+      datetime TIMESTAMP NOT NULL,
+      status VARCHAR(20) NOT NULL DEFAULT 'available'
+    );`);
 
-    console.log('Providers, services, and bookings tables initialized');
+    console.log('Providers, services, bookings, and timeslots tables initialized');
   } catch (err) {
     console.error('Error initializing tables:', err);
   } finally {

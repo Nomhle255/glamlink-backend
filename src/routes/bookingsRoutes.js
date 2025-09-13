@@ -15,5 +15,7 @@ router.get('/provider/:provider_id', bookingsController.getBookingsByProvider);
 router.put('/:id/status', bookingsController.updateBookingStatus);
 // Reschedule booking
 router.patch('/:id/reschedule', bookingsController.rescheduleBooking);
+// Update booking status (PATCH)
+router.patch('/:id/status', bookingsController.updateBookingStatus);
 
 module.exports = router;

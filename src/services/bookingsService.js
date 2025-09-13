@@ -27,7 +27,25 @@ async function getBookingsByProvider(provider_id) {
 async function updateBookingStatus(id, status) {
   const query = `UPDATE bookings SET status = $1 WHERE id = $2 RETURNING *`;
   const result = await pool.query(query, [status, id]);
-  return result.rows[0];
+  const booking = result.rows[0];
+  // Update timeslot status if booking is confirmed or completed
+  if (booking) {
+    const timeslotsService = require('./timeslotsService');
+    // Find the matching timeslot by provider and time
+    // If you use datetime, adjust accordingly
+    const timeslot = await timeslotsService.findTimeslot({
+      provider_id: booking.provider_id,
+      datetime: booking.time // or booking.datetime, depending on your schema
+    });
+    if (timeslot) {
+      if (status === 'confirmed') {
+        await timeslotsService.updateTimeslotStatus(timeslot.id, 'booked');
+      } else if (status === 'completed' || status === 'cancelled') {
+        await timeslotsService.updateTimeslotStatus(timeslot.id, 'available');
+      }
+    }
+  }
+  return booking;
 }
 
 async function rescheduleBooking(id, newTime) {

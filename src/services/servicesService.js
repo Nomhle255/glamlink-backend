@@ -14,6 +14,13 @@ async function getServicesByProvider(provider_id) {
   const result = await pool.query(query, [provider_id]);
   return result.rows;
 }
+async function getProvidersByService(serviceName) {
+  const query = `SELECT DISTINCT providers.* FROM providers
+    JOIN services ON providers.id = services.provider_id
+    WHERE services.name = $1`;
+  const result = await pool.query(query, [serviceName]);
+  return result.rows;
+}
 
 async function getAllServices() {
   const query = `SELECT * FROM services`;
@@ -40,4 +47,5 @@ module.exports = {
   getAllServices,
   deleteService,
   editService,
+  getProvidersByService,
 };
